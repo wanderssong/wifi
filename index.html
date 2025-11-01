@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Imagem</title>
+    <meta name="color-scheme" content="light dark" />
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: grid;
+            place-items: center;
+            min-height: 100dvh;
+            background: #0b0b0b;
+            color: #eee;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
+        }
+
+        figure {
+            margin: 0;
+            max-width: min(100vw, 1200px);
+            max-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            max-height: calc(100dvh - 16px);
+            height: auto;
+            width: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+            background: #111;
+        }
+
+        footer {
+            position: fixed;
+            inset: auto 0 8px;
+            display: flex;
+            justify-content: center;
+            opacity: .6;
+            font-size: 12px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <figure>
+        <!-- Troque "imagem.jpg" pelo nome do seu arquivo ou use o parâmetro ?src= -->
+        <img id="photo" src="img/meme.png" alt="Imagem" />
+    </figure>
+    <footer id="hint">Dica: você pode usar <code>?src=URL</code> na barra de endereços para trocar a imagem.</footer>
+
+    <script>
+        (function () {
+            const params = new URLSearchParams(location.search);
+            const srcParam = params.get('src');
+            const img = document.getElementById('photo');
+            if (srcParam) {
+                try {
+                    const url = decodeURIComponent(srcParam);
+                    img.src = url;
+                } catch (e) { /* ignora */ }
+            }
+            // Esconde a dica após alguns segundos
+            setTimeout(() => { document.getElementById('hint')?.remove(); }, 5000);
+        })();
+    </script>
+</body>
+
+</html>
